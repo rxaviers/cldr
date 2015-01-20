@@ -124,7 +124,7 @@ module.exports = function(grunt) {
 				// c) "Main" means the define wrappers are removed, but content is untouched. Only for main* files.
 				onBuildWrite: function ( id, path, contents ) {
 					var name = id
-						.replace( /util\/|common\//, "" );
+						.replace( /util\/|common\/|var\//, "" );
 
 					if ( (/^EventEmitter$/).test( id ) ) {
 						contents = contents
