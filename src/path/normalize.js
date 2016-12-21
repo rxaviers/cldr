@@ -16,7 +16,7 @@ define([
 			.replace( /^cldr\// , "" ); /* 2 */
 
 		// Replace {attribute}'s
-		path = path.replace( /{[a-zA-Z]+}/g, function( name ) {
+		path = path.replace( /{[a-zA-Z]+}/, function( name ) {
 			name = name.replace( /^{([^}]*)}$/, "$1" );
 			return attributes[ name ];
 		});
