@@ -41,7 +41,11 @@ See our [changelogs](./CHANGELOG.md).
 ### Load only the CLDR portion you need
 
 ```javascript
-// Load the appropriate portion of CLDR JSON data
+import likelySubtagsData from 'cldr-data/supplemental/likelySubtags';
+import enData from 'cldr-data/main/en';
+import ptBrData from 'cldr-data/main/pt';
+
+// Load only the appropriate portion of CLDR JSON data
 Cldr.load(
   likelySubtagsData,
   enData,
@@ -50,6 +54,17 @@ Cldr.load(
 ```
 
 See [How to get CLDR JSON data?](#how-to-get-cldr-json-data) below for more information on how to get that data.
+
+You **can't** use
+```javascript
+import Cldr from 'cldrjs';
+import cldrData from 'cldr-data';
+...
+Cldr.load(cldrData('supplemental/likelySubtags'));
+Cldr.load(cldrData(`main/en`));
+Cldr.load(cldrData(`main/pt`));
+```
+For example, using webpack (*because webpack is a static compiler*) he will load all **CLDR JSON data** in your bundle.
 
 ### Instantiate a locale and get it normalized
 
