@@ -64,7 +64,7 @@ Cldr.load(cldrData('supplemental/likelySubtags'));
 Cldr.load(cldrData(`main/en`));
 Cldr.load(cldrData(`main/pt`));
 ```
-For example, using webpack (*because webpack is a static compiler*) he will load all **CLDR JSON data** in your bundle.
+For example, using webpack (*because webpack is a static compiler*) it will load all **CLDR JSON data** in your bundle.
 
 ### Instantiate a locale and get it normalized
 
