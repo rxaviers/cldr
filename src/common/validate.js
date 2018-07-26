@@ -1,11 +1,7 @@
-define([
-	"./create_error"
-], function( createError ) {
+var createError = require("./create_error");
 
-	return function( code, check, attributes ) {
-		if ( !check ) {
-			throw createError( code, attributes );
-		}
-	};
-
-});
+module.exports = function( code, check, attributes ) {
+	if ( !check ) {
+		throw createError( code, attributes );
+	}
+};

@@ -2,18 +2,13 @@ module.exports = function(grunt) {
 
 	"use strict";
 
-	var isConnectTestRunning,
-		rdefineEnd = /\}\);[^}\w]*$/,
+	var rdefineEnd = /\}\);[^}\w]*$/,
 		pkg = grunt.file.readJSON( "package.json" );
 
 	function camelCase( input ) {
 		return input.toLowerCase().replace( /[_/](.)/g, function( match, group1 ) {
 			return group1.toUpperCase();
 		});
-	}
-
-	function mountFolder( connect, path ) {
-		return connect.static( require( "path" ).resolve( path ) );
 	}
 
 	function replaceConsts( content ) {
@@ -28,22 +23,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: pkg,
-		connect: {
-			options: {
-				port: 9001,
-				hostname: "localhost"
-			},
-			test: {
-				options: {
-					middleware: function ( connect ) {
-						return [
-							mountFolder( connect, "." ),
-							mountFolder( connect, "test" )
-						];
-					}
-				}
-			}
-		},
 		jshint: {
 			source: {
 				src: [ "src/**/*.js", "!src/build/**" ],
@@ -58,7 +37,7 @@ module.exports = function(grunt) {
 				}
 			},
 			metafiles: {
-				src: [ "bower.json", "package.json" ],
+				src: [ "package.json" ],
 				options: {
 					jshintrc: ".jshintrc"
 				}
@@ -85,35 +64,12 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		mocha: {
-			unit: {
-				options: {
-					log: true,
-					urls: [
-						"http://localhost:<%= connect.options.port %>/unit.html",
-						"http://localhost:<%= connect.options.port %>/unit_unresolved.html"
-					]
-				}
-			},
-			functional: {
-				options: {
-					log: true,
-					urls: [
-						"http://localhost:<%= connect.options.port %>/functional.html"//,
-						//"http://localhost:<%= connect.options.port %>/functional_unresolved.html"
-					]
-				}
-			}
-		},
 		requirejs: {
 			options: {
 				dir: "dist/.build",
 				appDir: "src",
 				baseUrl: ".",
 				optimize: "none",
-				paths: {
-					EventEmitter: "../bower_components/eventEmitter/EventEmitter"
-				},
 				skipSemiColonInsertion: true,
 				skipModuleInsertion: true,
 
@@ -263,30 +219,28 @@ module.exports = function(grunt) {
 					}
 				}
 			}
+		},
+		run: {
+			test: {
+				exec: "npm test"
+			}
 		}
 	});
 
-	require( "matchdep" ).filterDev( "grunt-*" ).forEach( grunt.loadNpmTasks );
-
-	grunt.registerTask( "test", function() {
-		var args = [].slice.call( arguments );
-		if ( !isConnectTestRunning ) {
-			grunt.task.run( "connect:test" );
-			isConnectTestRunning = true;
-		}
-		grunt.task.run( [ "mocha" ].concat( args ).join( ":" ) );
-	});
+	Object
+		.keys(require("./package.json").devDependencies)
+		.filter(function(dep) { return dep.indexOf("grunt-") === 0; })
+		.forEach(grunt.loadNpmTasks);
 
 	grunt.registerTask( "default", [
 		"jshint:metafiles",
 		"jshint:grunt",
 		"jshint:source",
 		"jshint:test",
-		"test:unit",
+		"run:test",
 		"requirejs",
 		"copy",
 		"jshint:dist",
-		"test:functional",
 		"uglify",
 		"compare_size",
 		"dco"

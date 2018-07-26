@@ -1,10 +1,6 @@
-define([
-	"../type",
-	"../../../util/array/is_array"
-], function( validateType, arrayIsArray ) {
+var validateType = require("../type");
+var arrayIsArray = require("../../../util/array/is_array");
 
-	return function( value, name ) {
-		validateType( value, name, typeof value === "string" || arrayIsArray( value ), "String or Array" );
-	};
-
-});
+module.exports = function( value, name ) {
+	validateType( value, name, typeof value === "string" || arrayIsArray( value ), "String or Array" );
+};

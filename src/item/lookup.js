@@ -1,50 +1,45 @@
-define([
-	"../bundle/parent_lookup",
-	"../path/normalize",
-	"../resource/get",
-	"../resource/set",
-	"../util/json/merge"
-], function( bundleParentLookup, pathNormalize, resourceGet, resourceSet, jsonMerge ) {
 
-	var lookup;
+var bundleParentLookup = require("../bundle/parent_lookup");
+var pathNormalize = require("../path/normalize");
+var resourceGet = require("../resource/get");
+var resourceSet = require("../resource/set");
+var jsonMerge = require("../util/json/merge");
 
-	lookup = function( Cldr, locale, path, attributes, childLocale ) {
-		var normalizedPath, parent, value;
+var lookup;
 
-		// 1: Finish recursion
-		// 2: Avoid infinite loop
-		if ( typeof locale === "undefined" /* 1 */ || locale === childLocale /* 2 */ ) {
-			return;
-		}
+module.exports = lookup = function( Cldr, locale, path, attributes, childLocale ) {
+	var normalizedPath, parent, value;
 
-		// Resolve path
-		normalizedPath = pathNormalize( path, attributes );
+	// 1: Finish recursion
+	// 2: Avoid infinite loop
+	if ( typeof locale === "undefined" /* 1 */ || locale === childLocale /* 2 */ ) {
+		return;
+	}
 
-		// Check resolved (cached) data first
-		// 1: Due to #16, never use the cached resolved non-leaf nodes. It may not
-		//    represent its leafs in its entirety.
-		value = resourceGet( Cldr._resolved, normalizedPath );
-		if ( value !== undefined && typeof value !== "object" /* 1 */ ) {
-			return value;
-		}
+	// Resolve path
+	normalizedPath = pathNormalize( path, attributes );
 
-		// Check raw data
-		value = resourceGet( Cldr._raw, normalizedPath );
-
-		if ( value === undefined ) {
-			// Or, lookup at parent locale
-			parent = bundleParentLookup( Cldr, locale );
-			value = lookup( Cldr, parent, path, jsonMerge( attributes, { bundle: parent }), locale );
-		}
-
-		if ( value !== undefined ) {
-			// Set resolved (cached)
-			resourceSet( Cldr._resolved, normalizedPath, value );
-		}
-
+	// Check resolved (cached) data first
+	// 1: Due to #16, never use the cached resolved non-leaf nodes. It may not
+	//    represent its leafs in its entirety.
+	value = resourceGet( Cldr._resolved, normalizedPath );
+	if ( value !== undefined && typeof value !== "object" /* 1 */ ) {
 		return value;
-	};
+	}
 
-	return lookup;
+	// Check raw data
+	value = resourceGet( Cldr._raw, normalizedPath );
 
-});
+	if ( value === undefined ) {
+		// Or, lookup at parent locale
+		parent = bundleParentLookup( Cldr, locale );
+		value = lookup( Cldr, parent, path, jsonMerge( attributes, { bundle: parent }), locale );
+	}
+
+	if ( value !== undefined ) {
+		// Set resolved (cached)
+		resourceSet( Cldr._resolved, normalizedPath, value );
+	}
+
+	return value;
+};

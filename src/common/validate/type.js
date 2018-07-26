@@ -1,13 +1,9 @@
-define([
-	"../validate"
-], function( validate ) {
+var validate = require("../validate");
 
-	return function( value, name, check, expected ) {
-		validate( "E_INVALID_PAR_TYPE", check, {
-			expected: expected,
-			name: name,
-			value: value
-		});
-	};
-
-});
+module.exports = function( value, name, check, expected ) {
+	validate( "E_INVALID_PAR_TYPE", check, {
+		expected: expected,
+		name: name,
+		value: value
+	});
+};

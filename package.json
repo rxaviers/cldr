@@ -37,6 +37,17 @@
     "email": "rxaviers@gmail.com",
     "url": "http://rafael.xavier.blog.br"
   },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./test/setup.js",
+    "testMatch": [
+      "**/test/unit/**/*.js?(x)",
+      "**/test/functional/**/*.js?(x)"
+    ]
+  },
+  "cldr-data-urls-filter": "(cldr-core|cldr-numbers-modern|cldr-dates-modern)",
   "licenses": [
     {
       "type": "MIT",
@@ -44,17 +55,20 @@
     }
   ],
   "devDependencies": {
-    "cldr-data-downloader": "0.2.x",
+    "chai": "^4.1.2",
+    "cldr-data": "^32.0.1",
     "grunt": "0.4.x",
     "grunt-compare-size": "0.4.0",
-    "grunt-contrib-connect": "0.3.x",
     "grunt-contrib-copy": "0.4.x",
     "grunt-contrib-jshint": "0.12.x",
     "grunt-contrib-requirejs": "0.4.x",
     "grunt-contrib-uglify": "0.2.x",
     "grunt-dco": "0.0.3",
+    "grunt-run": "^0.8.1",
     "gzip-js": "0.3.2",
-    "grunt-mocha": "0.3.x",
-    "matchdep": "*"
+    "jest-cli": "^23.4.1"
+  },
+  "dependencies": {
+    "wolfy87-eventemitter": "^5.2.5"
   }
 }

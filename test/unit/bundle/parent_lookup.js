@@ -1,27 +1,25 @@
-define([
-	"src/core",
-	"src/bundle/parent_lookup",
-	"json!cldr-data/supplemental/parentLocales.json"
-], function( Cldr, parentLookup, parentLocalesJson ) {
+var Cldr = require("../../../src/core.js");
+var parentLookup = require("../../../src/bundle/parent_lookup.js");
+var parentLocalesJson = require("cldr-data/supplemental/parentLocales.json");
 
-	describe( "Bundle Parent Lookup", function() {
+require("../../../src/unresolved.js");
 
-		before(function() {
-			Cldr.load( parentLocalesJson );
-		});
+describe( "Bundle Parent Lookup", function() {
 
-		it( "should truncate locale", function() {
-			expect( parentLookup( Cldr, [ "pt", "BR" ].join( Cldr.localeSep ) ) ).to.equal( "pt" );
-		});
+	beforeAll(function() {
+		Cldr.load( parentLocalesJson );
+	});
 
-		it( "should end with root", function() {
-			expect( parentLookup( Cldr, "en" ) ).to.equal( "root" );
-		});
+	it( "should truncate locale", function() {
+		expect( parentLookup( Cldr, [ "pt", "BR" ].join( Cldr.localeSep ) ) ).to.equal( "pt" );
+	});
 
-		it( "should use supplemental resource", function() {
-			expect( parentLookup( Cldr, [ "en", "IN" ].join( Cldr.localeSep ) )).to.equal( [ "en", "001" ].join( Cldr.localeSep ) );
-		});
+	it( "should end with root", function() {
+		expect( parentLookup( Cldr, "en" ) ).to.equal( "root" );
+	});
 
+	it( "should use supplemental resource", function() {
+		expect( parentLookup( Cldr, [ "en", "IN" ].join( Cldr.localeSep ) )).to.equal( [ "en", "001" ].join( Cldr.localeSep ) );
 	});
 
 });

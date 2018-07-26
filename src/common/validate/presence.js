@@ -1,11 +1,7 @@
-define([
-	"../validate"
-], function( validate ) {
+var validate = require("../validate");
 
-	return function( value, name ) {
-		validate( "E_MISSING_PARAMETER", typeof value !== "undefined", {
-			name: name
-		});
-	};
-
-});
+module.exports = function( value, name ) {
+	validate( "E_MISSING_PARAMETER", typeof value !== "undefined", {
+		name: name
+	});
+};

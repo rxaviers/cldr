@@ -1,18 +1,14 @@
-define(function() {
+// @path: normalized path
+module.exports = function( data, path, value ) {
+	var i,
+		node = data,
+		length = path.length;
 
-	// @path: normalized path
-	return function( data, path, value ) {
-		var i,
-			node = data,
-			length = path.length;
-
-		for ( i = 0; i < length - 1; i++ ) {
-			if ( !node[ path[ i ] ] ) {
-				node[ path[ i ] ] = {};
-			}
-			node = node[ path[ i ] ];
+	for ( i = 0; i < length - 1; i++ ) {
+		if ( !node[ path[ i ] ] ) {
+			node[ path[ i ] ] = {};
 		}
-		node[ path[ i ] ] = value;
-	};
-
-});
+		node = node[ path[ i ] ];
+	}
+	node[ path[ i ] ] = value;
+};

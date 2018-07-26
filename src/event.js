@@ -1,83 +1,79 @@
-define([
-	"EventEmitter",
-	"./common/validate/presence",
-	"./common/validate/type",
-	"./common/validate/type/function",
-	"./core",
-	"./path/normalize"
-], function( EventEmitter, validatePresence, validateType, validateTypeFunction, Cldr, pathNormalize ) {
+var EventEmitter = require("wolfy87-eventemitter");
+var validatePresence = require("./common/validate/presence");
+var validateType = require("./common/validate/type");
+var validateTypeFunction = require("./common/validate/type/function");
+var Cldr = require("./core");
+var pathNormalize = require("./path/normalize");
 
-	var superGet, superInit,
-		globalEe = new EventEmitter();
+var superGet, superInit,
+	globalEe = new EventEmitter();
 
-	function validateTypeEvent( value, name ) {
-		validateType( value, name, typeof value === "string" || value instanceof RegExp, "String or RegExp" );
-	}
+function validateTypeEvent( value, name ) {
+	validateType( value, name, typeof value === "string" || value instanceof RegExp, "String or RegExp" );
+}
 
-	function validateThenCall( method, self ) {
-		return function( event, listener ) {
-			validatePresence( event, "event" );
-			validateTypeEvent( event, "event" );
+function validateThenCall( method, self ) {
+	return function( event, listener ) {
+		validatePresence( event, "event" );
+		validateTypeEvent( event, "event" );
 
-			validatePresence( listener, "listener" );
-			validateTypeFunction( listener, "listener" );
+		validatePresence( listener, "listener" );
+		validateTypeFunction( listener, "listener" );
 
-			return self[ method ].apply( self, arguments );
-		};
-	}
-
-	function off( self ) {
-		return validateThenCall( "off", self );
-	}
-
-	function on( self ) {
-		return validateThenCall( "on", self );
-	}
-
-	function once( self ) {
-		return validateThenCall( "once", self );
-	}
-
-	Cldr.off = off( globalEe );
-	Cldr.on = on( globalEe );
-	Cldr.once = once( globalEe );
-
-	/**
-	 * Overload Cldr.prototype.init().
-	 */
-	superInit = Cldr.prototype.init;
-	Cldr.prototype.init = function() {
-		var ee;
-		this.ee = ee = new EventEmitter();
-		this.off = off( ee );
-		this.on = on( ee );
-		this.once = once( ee );
-		superInit.apply( this, arguments );
+		return self[ method ].apply( self, arguments );
 	};
+}
+
+function off( self ) {
+	return validateThenCall( "off", self );
+}
+
+function on( self ) {
+	return validateThenCall( "on", self );
+}
+
+function once( self ) {
+	return validateThenCall( "once", self );
+}
+
+Cldr.off = off( globalEe );
+Cldr.on = on( globalEe );
+Cldr.once = once( globalEe );
+
+/**
+ * Overload Cldr.prototype.init().
+ */
+superInit = Cldr.prototype.init;
+Cldr.prototype.init = function() {
+	var ee;
+	this.ee = ee = new EventEmitter();
+	this.off = off( ee );
+	this.on = on( ee );
+	this.once = once( ee );
+	superInit.apply( this, arguments );
+};
+
+/**
+ * getOverload is encapsulated, because of cldr/unresolved. If it's loaded
+ * after cldr/event (and note it overwrites .get), it can trigger this
+ * overload again.
+ */
+function getOverload() {
 
 	/**
-	 * getOverload is encapsulated, because of cldr/unresolved. If it's loaded
-	 * after cldr/event (and note it overwrites .get), it can trigger this
-	 * overload again.
+	 * Overload Cldr.prototype.get().
 	 */
-	function getOverload() {
+	superGet = Cldr.prototype.get;
+	Cldr.prototype.get = function( path ) {
+		var value = superGet.apply( this, arguments );
+		path = pathNormalize( path, this.attributes ).join( "/" );
+		globalEe.trigger( "get", [ path, value ] );
+		this.ee.trigger( "get", [ path, value ] );
+		return value;
+	};
+}
 
-		/**
-		 * Overload Cldr.prototype.get().
-		 */
-		superGet = Cldr.prototype.get;
-		Cldr.prototype.get = function( path ) {
-			var value = superGet.apply( this, arguments );
-			path = pathNormalize( path, this.attributes ).join( "/" );
-			globalEe.trigger( "get", [ path, value ] );
-			this.ee.trigger( "get", [ path, value ] );
-			return value;
-		};
-	}
+Cldr._eventInit = getOverload;
+getOverload();
 
-	Cldr._eventInit = getOverload;
-	getOverload();
-
-	return Cldr;
-
-});
+module.exports = Cldr;

@@ -1,9 +1,5 @@
-define([
-	"./array/is_array"
-], function( arrayIsArray ) {
+var arrayIsArray = require("./array/is_array");
 
-	return function( somethingOrArray ) {
-		return arrayIsArray( somethingOrArray ) ?  somethingOrArray : [ somethingOrArray ];
-	};
-
-});
+module.exports = function( somethingOrArray ) {
+	return arrayIsArray( somethingOrArray ) ?  somethingOrArray : [ somethingOrArray ];
+};

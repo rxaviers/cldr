@@ -1,9 +1,5 @@
-define([
-	"../type"
-], function( validateType ) {
+var validateType = require("../type");
 
-	return function( value, name ) {
-		validateType( value, name, typeof value === "string", "a string" );
-	};
-
-});
+module.exports = function( value, name ) {
+	validateType( value, name, typeof value === "string", "a string" );
+};

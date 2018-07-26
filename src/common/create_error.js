@@ -1,21 +1,18 @@
-define([
-	"../util/array/for_each",
-	"../util/object/keys"
-], function( arrayForEach, objectKeys ) {
 
-	return function( code, attributes ) {
-		var error, message;
+var arrayForEach = require("../util/array/for_each");
+var objectKeys = require("../util/object/keys");
 
-		message = code + ( attributes && JSON ? ": " + JSON.stringify( attributes ) : "" );
-		error = new Error( message );
-		error.code = code;
+module.exports = function( code, attributes ) {
+	var error, message;
 
-		// extend( error, attributes );
-		arrayForEach( objectKeys( attributes ), function( attribute ) {
-			error[ attribute ] = attributes[ attribute ];
-		});
+	message = code + ( attributes && JSON ? ": " + JSON.stringify( attributes ) : "" );
+	error = new Error( message );
+	error.code = code;
 
-		return error;
-	};
+	// extend( error, attributes );
+	arrayForEach( objectKeys( attributes ), function( attribute ) {
+		error[ attribute ] = attributes[ attribute ];
+	});
 
-});
+	return error;
+};

@@ -1,10 +1,6 @@
-define([
-	"../type",
-	"../../../util/is_plain_object"
-], function( validateType, isPlainObject ) {
+var validateType = require("../type");
+var isPlainObject = require("../../../util/is_plain_object");
 
-	return function( value, name ) {
-		validateType( value, name, typeof value === "undefined" || isPlainObject( value ), "Plain Object" );
-	};
-
-});
+module.exports = function( value, name ) {
+	validateType( value, name, typeof value === "undefined" || isPlainObject( value ), "Plain Object" );
+};

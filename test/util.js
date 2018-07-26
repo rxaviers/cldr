@@ -1,5 +1,3 @@
-define(function() {
-
 var allTypes = {
 	array: [ 7 ],
 	date: new Date(),
@@ -40,7 +38,7 @@ function not( a ) {
 	};
 }
 
-return {
+module.exports = {
 
 	assertEventParameter: function( expect, fn ) {
 		assertParameterType( expect, [ "regexp", "string" ], fn );
@@ -63,5 +61,3 @@ return {
 	}
 
 };
-
-});
