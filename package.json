@@ -20,6 +20,7 @@
     "compiler"
   ],
   "main": "dist/node_main.js",
+  "browser": "dist-esm/index.js",
   "files": [
     "CHANGELOG.md",
     "DCO.md",
@@ -39,7 +40,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "webpack --mode production --config webpack.config.js"
+    "build:dist": "webpack --mode production --config webpack.config.js",
+    "build:esm": "export NODE_ENV=production && babel src --out-dir dist-esm --delete-dir-on-start --ignore src/build/node_main.js --plugins $PWD/wrap-validate-with-env-check.js"
   },
   "jest": {
     "testURL": "http://localhost/",
@@ -76,6 +78,7 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
+    "@babel/cli": "^7.0.0-beta.55",
     "@babel/core": "^7.0.0-beta.55",
     "@swissquote/babel-preset-swissquote": "^1.2.1",
     "babel-core": "7.0.0-bridge.0",
