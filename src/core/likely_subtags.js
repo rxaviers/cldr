@@ -1,4 +1,4 @@
-var arraySome = require("../util/array/some");
+import arraySome from "../util/array/some";
 
 /**
  * Return the maximized language id as defined in
@@ -42,7 +42,7 @@ var arraySome = require("../util/array/some");
  *
  * @subtags [Array] normalized language id subtags tuple (see init.js).
  */
-module.exports = function( Cldr, cldr, subtags, options ) {
+export default function( Cldr, cldr, subtags, options ) {
 	var match, matchFound,
 		language = subtags[ 0 ],
 		script = subtags[ 1 ],

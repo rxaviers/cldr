@@ -1,10 +1,10 @@
-var Cldr = require("../../../src/core.js");
-var itemLookup = require("../../../src/item/lookup.js");
-var ptNumbersJson = require("cldr-data/main/pt/numbers.json");
-var genderJson = require("cldr-data/supplemental/gender.json");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
+import Cldr from "../../../src/core.js";
+import itemLookup from "../../../src/item/lookup.js";
+import ptNumbersJson from "cldr-data/main/pt/numbers.json";
+import genderJson from "cldr-data/supplemental/gender.json";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
-require("../../../src/unresolved.js");
+import "../../../src/unresolved.js";
 
 describe( "Item Lookup", function() {
 

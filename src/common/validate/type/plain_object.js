@@ -1,6 +1,6 @@
-var validateType = require("../type");
-var isPlainObject = require("../../../util/is_plain_object");
+import validateType from "../type";
+import isPlainObject from "../../../util/is_plain_object";
 
-module.exports = function( value, name ) {
+export default function( value, name ) {
 	validateType( value, name, typeof value === "undefined" || isPlainObject( value ), "Plain Object" );
 };

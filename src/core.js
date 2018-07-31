@@ -1,20 +1,20 @@
-var bundleLookup = require("./bundle/lookup");
-var createError = require("./common/create_error");
-var validate = require("./common/validate");
-var validatePresence = require("./common/validate/presence");
-var validateType = require("./common/validate/type");
-var validateTypePath = require("./common/validate/type/path");
-var validateTypePlainObject = require("./common/validate/type/plain_object");
-var validateTypeString = require("./common/validate/type/string");
-var coreLikelySubtags = require("./core/likely_subtags");
-var coreLoad = require("./core/load");
-var coreRemoveLikelySubtags = require("./core/remove_likely_subtags");
-var coreSubtags = require("./core/subtags");
-var itemGetResolved = require("./item/get_resolved");
-var pathNormalize = require("./path/normalize");
-var resourceGet = require("./resource/get");
-var alwaysArray = require("./util/always_array");
-var jsonMerge = require("./util/json/merge");
+import bundleLookup from "./bundle/lookup";
+import createError from "./common/create_error";
+import validate from "./common/validate";
+import validatePresence from "./common/validate/presence";
+import validateType from "./common/validate/type";
+import validateTypePath from "./common/validate/type/path";
+import validateTypePlainObject from "./common/validate/type/plain_object";
+import validateTypeString from "./common/validate/type/string";
+import coreLikelySubtags from "./core/likely_subtags";
+import coreLoad from "./core/load";
+import coreRemoveLikelySubtags from "./core/remove_likely_subtags";
+import coreSubtags from "./core/subtags";
+import itemGetResolved from "./item/get_resolved";
+import pathNormalize from "./path/normalize";
+import resourceGet from "./resource/get";
+import alwaysArray from "./util/always_array";
+import jsonMerge from "./util/json/merge";
 
 /**
  * new Cldr()
@@ -152,4 +152,4 @@ Cldr.prototype.main = function( path ) {
 	return this.get( [ "main/{bundle}" ].concat( path ) );
 };
 
-module.exports = Cldr;
+export default Cldr;

@@ -1,6 +1,6 @@
-var createError = require("./create_error");
+import createError from "./create_error";
 
-module.exports = function( code, check, attributes ) {
+export default function( code, check, attributes ) {
 	if ( !check ) {
 		throw createError( code, attributes );
 	}

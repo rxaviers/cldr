@@ -1,10 +1,10 @@
 
-var Cldr = require("../../src/core.js");
+import Cldr from "../../src/core.js";
 
-var util = require("../util");
+import util from "../util";
 
-var enNumbersJson = require("cldr-data/main/en/numbers.json");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
+import enNumbersJson from "cldr-data/main/en/numbers.json";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
 var isLoaded;
 

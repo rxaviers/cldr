@@ -1,4 +1,4 @@
-var jsonMerge = require("../../../../src/util/json/merge.js");
+import jsonMerge from "../../../../src/util/json/merge.js";
 
 var data1 = { a: { b: 1, c: 2 } },
 	data2 = { a: { b: 3, d: 4 } },

@@ -1,5 +1,5 @@
-var arrayForEach = require("../array/for_each");
-var arrayIsArray = require("../array/is_array");
+import arrayForEach from "../array/for_each";
+import arrayIsArray from "../array/is_array";
 
 // Returns new deeply merged JSON.
 //
@@ -31,4 +31,4 @@ var merge = function() {
 	return destination;
 };
 
-module.exports = merge;
+export default merge;

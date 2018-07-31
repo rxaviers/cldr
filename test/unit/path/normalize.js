@@ -1,4 +1,4 @@
-var pathNormalize = require("../../../src/path/normalize.js");
+import pathNormalize from "../../../src/path/normalize.js";
 
 describe("Path Normalize", function() {
 

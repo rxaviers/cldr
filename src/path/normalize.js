@@ -1,6 +1,6 @@
-var arrayIsArray = require("../util/array/is_array");
+import arrayIsArray from "../util/array/is_array";
 
-module.exports = function( path, attributes ) {
+export default function( path, attributes ) {
 	if ( arrayIsArray( path ) ) {
 		path = path.join( "/" );
 	}

@@ -1,5 +1,5 @@
-var Cldr = require("../../../src/core.js");
-var likelySubtags = require("cldr-data/supplemental/likelySubtags.json");
+import Cldr from "../../../src/core.js";
+import likelySubtags from "cldr-data/supplemental/likelySubtags.json";
 
 describe( "Bundle Lookup", function() {
 

@@ -1,13 +1,13 @@
 
-var bundleParentLookup = require("../bundle/parent_lookup");
-var pathNormalize = require("../path/normalize");
-var resourceGet = require("../resource/get");
-var resourceSet = require("../resource/set");
-var jsonMerge = require("../util/json/merge");
+import bundleParentLookup from "../bundle/parent_lookup";
+import pathNormalize from "../path/normalize";
+import resourceGet from "../resource/get";
+import resourceSet from "../resource/set";
+import jsonMerge from "../util/json/merge";
 
 var lookup;
 
-module.exports = lookup = function( Cldr, locale, path, attributes, childLocale ) {
+export default lookup = function( Cldr, locale, path, attributes, childLocale ) {
 	var normalizedPath, parent, value;
 
 	// 1: Finish recursion

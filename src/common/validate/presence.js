@@ -1,6 +1,6 @@
-var validate = require("../validate");
+import validate from "../validate";
 
-module.exports = function( value, name ) {
+export default function( value, name ) {
 	validate( "E_MISSING_PARAMETER", typeof value !== "undefined", {
 		name: name
 	});

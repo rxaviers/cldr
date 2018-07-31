@@ -1,4 +1,4 @@
-var setAvailableBundles = require("../../../src/core/set_available_bundles.js");
+import setAvailableBundles from "../../../src/core/set_available_bundles.js";
 
 describe( "Core setAvailableBundles", function() {
 	var fakeCldr = {

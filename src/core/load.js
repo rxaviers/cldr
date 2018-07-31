@@ -1,8 +1,8 @@
-var coreSetAvailableBundles = require("./set_available_bundles");
-var validatePresence = require("../common/validate/presence");
-var validateTypePlainObject = require("../common/validate/type/plain_object");
-var alwaysArray = require("../util/always_array");
-var jsonMerge = require("../util/json/merge");
+import coreSetAvailableBundles from "./set_available_bundles";
+import validatePresence from "../common/validate/presence";
+import validateTypePlainObject from "../common/validate/type/plain_object";
+import alwaysArray from "../util/always_array";
+import jsonMerge from "../util/json/merge";
 
 /**
  * load( Cldr, source, jsons )
@@ -13,7 +13,7 @@ var jsonMerge = require("../util/json/merge");
  *
  * @jsons [arguments]
  */
-module.exports = function( Cldr, source, jsons ) {
+export default function( Cldr, source, jsons ) {
 	var i, j, json;
 
 	validatePresence( jsons[ 0 ], "json" );

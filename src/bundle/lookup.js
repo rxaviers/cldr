@@ -1,7 +1,7 @@
-var coreLikelySubtags = require("../core/likely_subtags");
-var coreRemoveLikelySubtags = require("../core/remove_likely_subtags");
-var coreSubtags = require("../core/subtags");
-var arrayForEach = require("../util/array/for_each");
+import coreLikelySubtags from "../core/likely_subtags";
+import coreRemoveLikelySubtags from "../core/remove_likely_subtags";
+import coreSubtags from "../core/subtags";
+import arrayForEach from "../util/array/for_each";
 
 /**
  * bundleLookup( minLanguageId )
@@ -12,7 +12,7 @@ var arrayForEach = require("../util/array/for_each");
  *
  * @minLanguageId [String] requested languageId after applied remove likely subtags.
  */
-module.exports = function( Cldr, cldr, minLanguageId ) {
+export default function( Cldr, cldr, minLanguageId ) {
 	var availableBundleMap = Cldr._availableBundleMap,
 		availableBundleMapQueue = Cldr._availableBundleMapQueue;
 

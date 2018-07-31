@@ -1,5 +1,5 @@
 // @path: normalized path
-module.exports = function( data, path ) {
+export default function( data, path ) {
 	var i,
 		node = data,
 		length = path.length;

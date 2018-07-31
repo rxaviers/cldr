@@ -1,9 +1,9 @@
-var EventEmitter = require("wolfy87-eventemitter");
-var validatePresence = require("./common/validate/presence");
-var validateType = require("./common/validate/type");
-var validateTypeFunction = require("./common/validate/type/function");
-var Cldr = require("./core");
-var pathNormalize = require("./path/normalize");
+import EventEmitter from "wolfy87-eventemitter";
+import validatePresence from "./common/validate/presence";
+import validateType from "./common/validate/type";
+import validateTypeFunction from "./common/validate/type/function";
+import Cldr from "./core";
+import pathNormalize from "./path/normalize";
 
 var superGet, superInit,
 	globalEe = new EventEmitter();
@@ -76,4 +76,4 @@ function getOverload() {
 Cldr._eventInit = getOverload;
 getOverload();
 
-module.exports = Cldr;
+export default Cldr;

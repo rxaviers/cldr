@@ -1,7 +1,7 @@
-var resourceGet = require("../resource/get");
-var pathNormalize = require("../path/normalize");
+import resourceGet from "../resource/get";
+import pathNormalize from "../path/normalize";
 
-module.exports = function( Cldr, locale ) {
+export default function( Cldr, locale ) {
 	var normalizedPath, parent;
 
 	if ( locale === "root" ) {

@@ -1,7 +1,7 @@
-var resourceGet = require("../resource/get");
-var pathNormalize = require("../path/normalize");
+import resourceGet from "../resource/get";
+import pathNormalize from "../path/normalize";
 
-module.exports = function( Cldr, path, attributes ) {
+export default function( Cldr, path, attributes ) {
 	// Resolve path
 	var normalizedPath = pathNormalize( path, attributes );
 

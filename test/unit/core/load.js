@@ -1,4 +1,4 @@
-var _load = require("../../../src/core/load.js");
+import _load from "../../../src/core/load.js";
 
 describe( "Core load", function() {
 	var fakeCldr = {

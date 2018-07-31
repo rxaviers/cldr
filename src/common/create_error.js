@@ -1,8 +1,8 @@
 
-var arrayForEach = require("../util/array/for_each");
-var objectKeys = require("../util/object/keys");
+import arrayForEach from "../util/array/for_each";
+import objectKeys from "../util/object/keys";
 
-module.exports = function( code, attributes ) {
+export default function( code, attributes ) {
 	var error, message;
 
 	message = code + ( attributes && JSON ? ": " + JSON.stringify( attributes ) : "" );

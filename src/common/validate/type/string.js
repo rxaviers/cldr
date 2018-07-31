@@ -1,5 +1,5 @@
-var validateType = require("../type");
+import validateType from "../type";
 
-module.exports = function( value, name ) {
+export default function( value, name ) {
 	validateType( value, name, typeof value === "string", "a string" );
 };

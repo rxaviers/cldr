@@ -1,4 +1,4 @@
-var resourceSet = require("../../../src/resource/set.js");
+import resourceSet from "../../../src/resource/set.js";
 
 var data = {};
 

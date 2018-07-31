@@ -31,13 +31,18 @@ const optimization = {
 
 // This is used in each bundle that isn't
 // cldr's core to tell it how to include it
+const externalsConfig = {
+  commonjs2: "../cldr",
+  commonjs: "../cldr",
+  amd: "../cldr",
+  root: "Cldr"
+};
+
 const externals = {
-  "./core": {
-    commonjs2: "../cldr",
-    commonjs: "../cldr",
-    amd: "../cldr",
-    root: "Cldr"
-  }
+  "../../../core": externalsConfig,
+  "../../core": externalsConfig,
+  "../core": externalsConfig,
+  "./core": externalsConfig
 };
 
 function stats(file) {
@@ -57,8 +62,8 @@ function escapeRegExp(str) {
 function createReplacements(substitutions) {
   const replacements = Object.keys(substitutions).map(key => {
     return {
-      pattern: new RegExp(`require\\("${escapeRegExp(key)}"\\)`, "gi"),
-      replacement: () => substitutions[key]
+      pattern: new RegExp(`import (.*) from "${escapeRegExp(key)}";`, "gi"),
+      replacement: (match, p1) => `import Cldr_${p1} from "${substitutions[key]}"; const ${p1} = Cldr_${p1}.${p1};`
     };
   });
 
@@ -72,6 +77,7 @@ module.exports = [
     output: {
       library: "Cldr",
       libraryTarget: "umd",
+      libraryExport: "default",
       filename: "cldr.js"
     },
     plugins: [
@@ -97,6 +103,7 @@ module.exports = [
     output: {
       library: "Cldr",
       libraryTarget: "umd",
+      libraryExport: "default",
       filename: "cldr/event.js"
     },
     module: {
@@ -105,10 +112,10 @@ module.exports = [
           test: /\.js$/,
           // Build optimization hack to avoid duplicating functions across modules.
           loader: createReplacements({
-            "./common/validate/presence": "Cldr._validatePresence",
-            "./common/validate/type": "Cldr._validateType",
-            "../type": "Cldr._validateType",
-            "./path/normalize": "Cldr._pathNormalize"
+            "./common/validate/presence": "./core",
+            "./common/validate/type": "./core",
+            "../type": "../../core",
+            "./path/normalize": "./core"
           })
         }
       ]
@@ -128,6 +135,7 @@ module.exports = [
     output: {
       library: "Cldr",
       libraryTarget: "umd",
+      libraryExport: "default",
       filename: "cldr/supplemental.js"
     },
     module: {
@@ -136,7 +144,7 @@ module.exports = [
           test: /\.js$/,
           // Build optimization hack to avoid duplicating functions across modules.
           loader: createReplacements({
-            "../util/always_array": "Cldr._alwaysArray"
+            "../util/always_array": "../core"
           })
         }
       ]
@@ -156,6 +164,7 @@ module.exports = [
     output: {
       library: "Cldr",
       libraryTarget: "umd",
+      libraryExport: "default",
       filename: "cldr/unresolved.js"
     },
     module: {
@@ -164,12 +173,12 @@ module.exports = [
           test: /\.js$/,
           // Build optimization hack to avoid duplicating functions across modules.
           loader: createReplacements({
-            "../path/normalize": "Cldr._pathNormalize",
-            "../util/json/merge": "Cldr._jsonMerge",
-            "../resource/get": "Cldr._resourceGet",
-            "./core/load": "Cldr._coreLoad",
-            "../common/validate/presence": "Cldr._validatePresence",
-            "./common/validate/type/path": "Cldr._validateTypePath"
+            "../path/normalize": "../core",
+            "../util/json/merge": "../core",
+            "../resource/get": "../core",
+            "./core/load": "./core",
+            "../common/validate/presence": "../core",
+            "./common/validate/type/path": "./core"
           })
         }
       ]

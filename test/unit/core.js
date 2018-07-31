@@ -1,6 +1,6 @@
-var Cldr = require("../../src/core.js");
-var enNumbersJson = require("cldr-data/main/en/numbers.json");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
+import Cldr from "../../src/core.js";
+import enNumbersJson from "cldr-data/main/en/numbers.json";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
 describe( "Cldr (core)", function() {
 	beforeAll(function() {

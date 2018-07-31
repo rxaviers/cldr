@@ -1,5 +1,5 @@
-var coreLikelySubtags = require("./likely_subtags");
-var arraySome = require("../util/array/some");
+import coreLikelySubtags from "./likely_subtags";
+import arraySome from "../util/array/some";
 
 /**
  * Given a locale, remove any fields that Add Likely Subtags would add.
@@ -13,7 +13,7 @@ var arraySome = require("../util/array/some");
  * 
  * @maxLanguageId [Array] maxLanguageId tuple (see init.js).
  */
-module.exports = function( Cldr, cldr, maxLanguageId ) {
+export default function( Cldr, cldr, maxLanguageId ) {
 	var match, matchFound,
 		language = maxLanguageId[ 0 ],
 		script = maxLanguageId[ 1 ],

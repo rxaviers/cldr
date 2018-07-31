@@ -1,8 +1,8 @@
-var Cldr = require("../../src/core.js");
-require("../../src/event.js");
+import Cldr from "../../src/core.js";
+import "../../src/event.js";
 
-var util = require("../util");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
+import util from "../util";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
 Cldr.load( likelySubtagsJson );
 

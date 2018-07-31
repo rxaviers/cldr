@@ -1,8 +1,8 @@
-var Cldr = require("../../src/core.js");
-var supplemental = require("../../src/supplemental/main");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
-var timeDataJson = require("cldr-data/supplemental/timeData.json");
-var weekDataJson = require("cldr-data/supplemental/weekData.json");
+import Cldr from "../../src/core.js";
+import supplemental from "../../src/supplemental/main";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
+import timeDataJson from "cldr-data/supplemental/timeData.json";
+import weekDataJson from "cldr-data/supplemental/weekData.json";
 
 describe( "Supplemental", function() {
 	var en, enGb, fr, ptBr, ty;

@@ -1,4 +1,4 @@
-module.exports = function( object ) {
+export default function( object ) {
 	var i,
 		result = [];
 

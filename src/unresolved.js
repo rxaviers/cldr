@@ -1,8 +1,8 @@
-var validatePresence = require("./common/validate/presence");
-var validateTypePath = require("./common/validate/type/path");
-var Cldr = require("./core");
-var coreLoad = require("./core/load");
-var itemLookup = require("./item/lookup");
+import validatePresence from "./common/validate/presence";
+import validateTypePath from "./common/validate/type/path";
+import Cldr from "./core";
+import coreLoad from "./core/load";
+import itemLookup from "./item/lookup";
 
 Cldr._raw = {};
 
@@ -35,4 +35,4 @@ if ( Cldr._eventInit ) {
 	Cldr._eventInit();
 }
 
-module.exports = Cldr;
+export default Cldr;

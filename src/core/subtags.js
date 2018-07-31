@@ -3,7 +3,7 @@
  *
  * @locale [String]
  */
-module.exports = function( locale ) {
+export default function( locale ) {
 	var aux, unicodeLanguageId,
 		subtags = [];
 

@@ -1,6 +1,6 @@
-var Cldr = require("../../../src/core.js");
-var removeLikelySubtags = require("../../../src/core/remove_likely_subtags.js");
-var likelySubtagsJson = require("cldr-data/supplemental/likelySubtags.json");
+import Cldr from "../../../src/core.js";
+import removeLikelySubtags from "../../../src/core/remove_likely_subtags.js";
+import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
 describe( "Remove Likely Subtags", function() {
 	var cldr = new Cldr( "root" );

@@ -1,8 +1,8 @@
-var Cldr = require("../../../src/core.js");
-var parentLookup = require("../../../src/bundle/parent_lookup.js");
-var parentLocalesJson = require("cldr-data/supplemental/parentLocales.json");
+import Cldr from "../../../src/core.js";
+import parentLookup from "../../../src/bundle/parent_lookup.js";
+import parentLocalesJson from "cldr-data/supplemental/parentLocales.json";
 
-require("../../../src/unresolved.js");
+import "../../../src/unresolved.js";
 
 describe( "Bundle Parent Lookup", function() {
 

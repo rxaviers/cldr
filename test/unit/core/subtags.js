@@ -1,4 +1,4 @@
-var subtags = require("../../../src/core/subtags.js");
+import subtags from "../../../src/core/subtags.js";
 
 describe( "Subtags", function() {
 	it( "should match language", function() {

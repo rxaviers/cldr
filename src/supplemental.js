@@ -1,5 +1,5 @@
-var Cldr = require("./core");
-var supplementalMain = require("./supplemental/main");
+import Cldr from "./core";
+import supplementalMain from "./supplemental/main";
 
 var initSuper = Cldr.prototype.init;
 
@@ -13,4 +13,4 @@ Cldr.prototype.init = function() {
 	this.supplemental = supplementalMain( this );
 };
 
-module.exports = Cldr;
+export default Cldr;

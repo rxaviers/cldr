@@ -1,4 +1,4 @@
-var resourceGet = require("../resource/get");
+import resourceGet from "../resource/get";
 
 /**
  * setAvailableBundles( Cldr, json )
@@ -9,7 +9,7 @@ var resourceGet = require("../resource/get");
  *
  * Set available bundles queue based on passed json CLDR data. Considers a bundle as any String at /main/{bundle}.
  */
-module.exports = function( Cldr, json ) {
+export default function( Cldr, json ) {
 	var bundle,
 		availableBundleMapQueue = Cldr._availableBundleMapQueue,
 		main = resourceGet( json, [ "main" ] );

@@ -1,6 +1,6 @@
-var alwaysArray = require("../util/always_array");
+import alwaysArray from "../util/always_array";
 
-module.exports = function( cldr ) {
+export default function( cldr ) {
 
 	var prepend, supplemental;
 	

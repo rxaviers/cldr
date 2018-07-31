@@ -1,4 +1,4 @@
-module.exports = function( array, callback ) {
+export default function( array, callback ) {
 	var i, length;
 	if ( array.some ) {
 		return array.some( callback );

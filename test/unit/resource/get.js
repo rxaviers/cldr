@@ -1,4 +1,4 @@
-var resourceGet = require("../../../src/resource/get.js");
+import resourceGet from "../../../src/resource/get.js";
 
 var data = { a: { b: { c: 5 } } };
 
