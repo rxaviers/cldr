@@ -11,4 +11,4 @@ export default function( data, path, value ) {
 		node = node[ path[ i ] ];
 	}
 	node[ path[ i ] ] = value;
-};
+}

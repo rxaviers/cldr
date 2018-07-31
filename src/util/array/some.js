@@ -9,4 +9,4 @@ export default function( array, callback ) {
 		}
 	}
 	return false;
-};
+}

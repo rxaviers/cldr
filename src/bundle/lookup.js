@@ -33,4 +33,4 @@ export default function( Cldr, cldr, minLanguageId ) {
 	}
 
 	return availableBundleMap[ minLanguageId ] || null;
-};
+}

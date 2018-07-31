@@ -45,4 +45,4 @@ export default function( locale ) {
 	// 3: variant
 	// 4: unicodeLocaleExtensions
 	return subtags;
-};
+}

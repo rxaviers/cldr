@@ -6,4 +6,4 @@ export default function( value, name, check, expected ) {
 		name: name,
 		value: value
 	});
-};
+}

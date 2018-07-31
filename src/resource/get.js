@@ -11,4 +11,4 @@ export default function( data, path ) {
 		}
 	}
 	return node[ path[ i ] ];
-};
+}

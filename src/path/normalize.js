@@ -20,4 +20,4 @@ export default function( path, attributes ) {
 	});
 
 	return path.split( "/" );
-};
+}

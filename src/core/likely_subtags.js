@@ -88,4 +88,4 @@ export default function( Cldr, cldr, subtags, options ) {
 		// [3.1.1]
 		return;
 	}
-};
+}

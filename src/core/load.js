@@ -32,4 +32,4 @@ export default function( Cldr, source, jsons ) {
 	}
 
 	return source;
-};
+}

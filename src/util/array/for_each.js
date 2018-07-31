@@ -6,4 +6,4 @@ export default function( array, callback ) {
 	for ( i = 0, length = array.length; i < length; i++ ) {
 		callback( array[ i ], i, array );
 	}
-};
+}

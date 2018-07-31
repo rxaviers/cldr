@@ -4,4 +4,4 @@ export default function( code, check, attributes ) {
 	if ( !check ) {
 		throw createError( code, attributes );
 	}
-};
+}

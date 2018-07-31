@@ -44,4 +44,4 @@ export default function( cldr ) {
 
 	return supplemental;
 
-};
+}

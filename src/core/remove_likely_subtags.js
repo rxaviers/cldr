@@ -42,4 +42,4 @@ export default function( Cldr, cldr, maxLanguageId ) {
 
 	// [4]
 	return maxLanguageId;
-};
+}

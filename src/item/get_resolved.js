@@ -6,4 +6,4 @@ export default function( Cldr, path, attributes ) {
 	var normalizedPath = pathNormalize( path, attributes );
 
 	return resourceGet( Cldr._resolved, normalizedPath );
-};
+}
