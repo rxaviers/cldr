@@ -55,8 +55,11 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
-			test: {
-				exec: "npm run test"
+			test_unit: {
+				exec: "npm run test:unit"
+			},
+			test_functional: {
+				exec: "npm run test:functional"
 			},
 			build_dist: {
 				exec: "npm run build:dist"
@@ -77,9 +80,10 @@ module.exports = function(grunt) {
 		"jshint:grunt",
 		"jshint:source",
 		"jshint:test",
-		"run:test",
+		"run:test_unit",
 		"run:build_dist",
 		"run:build_esm",
+		"run:test_functional",
 		"compare_size",
 		"dco"
 	]);

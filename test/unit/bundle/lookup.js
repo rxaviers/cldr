@@ -3,7 +3,7 @@ import likelySubtags from "cldr-data/supplemental/likelySubtags.json";
 
 describe( "Bundle Lookup", function() {
 
-	beforeAll(function() {
+	before(function() {
 		Cldr.load( likelySubtags );
 	});
 

@@ -1,5 +1,5 @@
-import Cldr from "../../src/core.js";
-import "../../src/event.js";
+import Cldr from "../../dist/cldr.js";
+import "../../dist/cldr/event.js";
 
 import util from "../util";
 import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";

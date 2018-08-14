@@ -8,7 +8,7 @@ import "../../../src/unresolved.js";
 
 describe( "Item Lookup", function() {
 
-	beforeAll(function() {
+	before(function() {
 		Cldr.load(
 			genderJson,
 			likelySubtagsJson,

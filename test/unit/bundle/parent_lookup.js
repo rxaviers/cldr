@@ -6,7 +6,7 @@ import "../../../src/unresolved.js";
 
 describe( "Bundle Parent Lookup", function() {
 
-	beforeAll(function() {
+	before(function() {
 		Cldr.load( parentLocalesJson );
 	});
 

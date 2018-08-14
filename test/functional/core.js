@@ -1,5 +1,5 @@
 
-import Cldr from "../../src/core.js";
+import Cldr from "../../dist/cldr.js";
 
 import util from "../util";
 

@@ -5,7 +5,7 @@ import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 describe( "Likely Subtags", function() {
 	var cldr = new Cldr( "root" );
 
-	beforeAll(function() {
+	before(function() {
 		Cldr.load( likelySubtagsJson );
 	});
 

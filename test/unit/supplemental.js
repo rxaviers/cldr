@@ -7,7 +7,7 @@ import weekDataJson from "cldr-data/supplemental/weekData.json";
 describe( "Supplemental", function() {
 	var en, enGb, fr, ptBr, ty;
 
-	beforeAll(function() {
+	before(function() {
 		Cldr.load(
 			likelySubtagsJson,
 			timeDataJson,

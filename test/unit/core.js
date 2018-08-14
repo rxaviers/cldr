@@ -3,7 +3,7 @@ import enNumbersJson from "cldr-data/main/en/numbers.json";
 import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 
 describe( "Cldr (core)", function() {
-	beforeAll(function() {
+	before(function() {
 		Cldr.load( enNumbersJson, likelySubtagsJson );
 	});
 
