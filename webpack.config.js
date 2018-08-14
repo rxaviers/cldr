@@ -45,6 +45,13 @@ const externals = {
   "./core": externalsConfig
 };
 
+const outputDefaults = {
+  library: "Cldr",
+  libraryTarget: "umd",
+  libraryExport: "default",
+  globalObject: "typeof self !== 'undefined' ? self : this"
+};
+
 function stats(file) {
   if (!enable_profile) {
     return false;
@@ -63,7 +70,7 @@ function createReplacements(substitutions) {
   const replacements = Object.keys(substitutions).map(key => {
     return {
       pattern: new RegExp(`import (.*) from "${escapeRegExp(key)}";`, "gi"),
-      replacement: (match, p1) => `import Cldr_${p1} from "${substitutions[key]}"; const ${p1} = Cldr_${p1}.${p1};`
+      replacement: (match, p1) => `import Cldr_${p1} from "${substitutions[key]}"; const ${p1} = Cldr_${p1}._${p1};`
     };
   });
 
@@ -75,9 +82,7 @@ module.exports = [
   {
     entry: "./src/core.js",
     output: {
-      library: "Cldr",
-      libraryTarget: "umd",
-      libraryExport: "default",
+      ...outputDefaults,
       filename: "cldr.js"
     },
     plugins: [
@@ -101,9 +106,7 @@ module.exports = [
   {
     entry: "./src/event.js",
     output: {
-      library: "Cldr",
-      libraryTarget: "umd",
-      libraryExport: "default",
+      ...outputDefaults,
       filename: "cldr/event.js"
     },
     module: {
@@ -133,9 +136,7 @@ module.exports = [
   {
     entry: "./src/supplemental.js",
     output: {
-      library: "Cldr",
-      libraryTarget: "umd",
-      libraryExport: "default",
+      ...outputDefaults,
       filename: "cldr/supplemental.js"
     },
     module: {
@@ -162,9 +163,7 @@ module.exports = [
   {
     entry: "./src/unresolved.js",
     output: {
-      library: "Cldr",
-      libraryTarget: "umd",
-      libraryExport: "default",
+      ...outputDefaults,
       filename: "cldr/unresolved.js"
     },
     module: {
