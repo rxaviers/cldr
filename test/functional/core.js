@@ -1,4 +1,4 @@
-
+/* global describe, it, expect */
 import Cldr from "../../dist/cldr.js";
 
 import util from "../util";
@@ -9,100 +9,95 @@ import likelySubtagsJson from "cldr-data/supplemental/likelySubtags.json";
 var isLoaded;
 
 function cldrLoad() {
-	if ( isLoaded ) {
-		return;
-	}
-	Cldr.load( enNumbersJson, likelySubtagsJson );
-	isLoaded = true;
+  if (isLoaded) {
+    return;
+  }
+  Cldr.load(enNumbersJson, likelySubtagsJson);
+  isLoaded = true;
 }
 
-describe( "Cldr.load( json )", function() {
+describe("Cldr.load( json )", function() {
+  it("should throw error on missing json parameter", function() {
+    expect(function() {
+      Cldr.load();
+    }).to.throw(Error, /E_MISSING_PARAMETER/);
+  });
 
-	it( "should throw error on missing json parameter", function() {
-		expect(function() {
-			Cldr.load();
-			}).to.throw( Error, /E_MISSING_PARAMETER/ );
-	});
+  it("should throw error on invalid locale parameter type", function() {
+    util.assertObjectParameter(expect, function(invalidValue) {
+      return function() {
+        Cldr.load(invalidValue);
+      };
+    });
+  });
 
-	it( "should throw error on invalid locale parameter type", function() {
-		util.assertObjectParameter( expect, function( invalidValue ) {
-			return function() {
-				Cldr.load( invalidValue );
-			};
-		});
-	});
+  it("should throw error on invalid locale parameter type", function() {
+    util.assertObjectParameter(expect, function(invalidValue) {
+      return function() {
+        Cldr.load([{ a: 1 }, invalidValue]);
+      };
+    });
+  });
 
-	it( "should throw error on invalid locale parameter type", function() {
-		util.assertObjectParameter( expect, function( invalidValue ) {
-			return function() {
-				Cldr.load([ { a: 1 }, invalidValue ]);
-			};
-		});
-	});
-
-	it( "should throw error on invalid locale parameter type", function() {
-		util.assertObjectParameter( expect, function( invalidValue ) {
-			return function() {
-				Cldr.load( { a: 1 }, invalidValue );
-			};
-		});
-	});
-
+  it("should throw error on invalid locale parameter type", function() {
+    util.assertObjectParameter(expect, function(invalidValue) {
+      return function() {
+        Cldr.load({ a: 1 }, invalidValue);
+      };
+    });
+  });
 });
 
-describe( "new Cldr( locale )", function() {
-	cldrLoad();
+describe("new Cldr( locale )", function() {
+  cldrLoad();
 
-	it( "should throw error on missing locale parameter", function() {
-		expect(function() {
-			new Cldr();
-			}).to.throw( Error, /E_MISSING_PARAMETER/ );
-	});
+  it("should throw error on missing locale parameter", function() {
+    expect(function() {
+      new Cldr();
+    }).to.throw(Error, /E_MISSING_PARAMETER/);
+  });
 
-	it( "should throw error on invalid locale parameter type", function() {
-		util.assertStringParameter( expect, function( invalidValue ) {
-			return function() {
-				new Cldr( invalidValue );
-			};
-		});
-	});
-
+  it("should throw error on invalid locale parameter type", function() {
+    util.assertStringParameter(expect, function(invalidValue) {
+      return function() {
+        new Cldr(invalidValue);
+      };
+    });
+  });
 });
 
-describe( ".get( path )", function() {
-	var cldr;
-	cldrLoad();
-	cldr = new Cldr( "en" );
+describe(".get( path )", function() {
+  var cldr;
+  cldrLoad();
+  cldr = new Cldr("en");
 
-	it( "should throw error on invalid parameter type", function() {
-		util.assertPathParameter( expect, function( invalidValue ) {
-			return function() {
-				cldr.get( invalidValue );
-			};
-		});
-	});
-
+  it("should throw error on invalid parameter type", function() {
+    util.assertPathParameter(expect, function(invalidValue) {
+      return function() {
+        cldr.get(invalidValue);
+      };
+    });
+  });
 });
 
-describe( ".main( path )", function() {
-	var cldr;
-	cldrLoad();
-	cldr = new Cldr( "en" );
+describe(".main( path )", function() {
+  var cldr;
+  cldrLoad();
+  cldr = new Cldr("en");
 
-	it( "should throw error on invalid parameter type", function() {
-		util.assertPathParameter( expect, function( invalidValue ) {
-			return function() {
-				cldr.main( invalidValue );
-			};
-		});
-	});
+  it("should throw error on invalid parameter type", function() {
+    util.assertPathParameter(expect, function(invalidValue) {
+      return function() {
+        cldr.main(invalidValue);
+      };
+    });
+  });
 
-	it( "should throw error on missing bundle", function() {
-		var cldr = new Cldr( "sr-RS" );
-		expect( cldr.attributes.bundle ).to.be.null;
-		expect(function() {
-			cldr.main( "numbers" );
-		}).to.throw( Error, /E_MISSING_BUNDLE/ );
-	});
-
+  it("should throw error on missing bundle", function() {
+    var cldr = new Cldr("sr-RS");
+    expect(cldr.attributes.bundle).to.be.null;
+    expect(function() {
+      cldr.main("numbers");
+    }).to.throw(Error, /E_MISSING_BUNDLE/);
+  });
 });

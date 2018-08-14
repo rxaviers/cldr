@@ -9,17 +9,20 @@ import resourceGet from "../resource/get";
  *
  * Set available bundles queue based on passed json CLDR data. Considers a bundle as any String at /main/{bundle}.
  */
-export default function( Cldr, json ) {
-	var bundle,
-		availableBundleMapQueue = Cldr._availableBundleMapQueue,
-		main = resourceGet( json, [ "main" ] );
+export default function(Cldr, json) {
+  var bundle,
+    availableBundleMapQueue = Cldr._availableBundleMapQueue,
+    main = resourceGet(json, ["main"]);
 
-	if ( main ) {
-		for ( bundle in main ) {
-			if ( main.hasOwnProperty( bundle ) && bundle !== "root" &&
-						availableBundleMapQueue.indexOf( bundle ) === -1 ) {
-				availableBundleMapQueue.push( bundle );
-			}
-		}
-	}
+  if (main) {
+    for (bundle in main) {
+      if (
+        main.hasOwnProperty(bundle) &&
+        bundle !== "root" &&
+        availableBundleMapQueue.indexOf(bundle) === -1
+      ) {
+        availableBundleMapQueue.push(bundle);
+      }
+    }
+  }
 }

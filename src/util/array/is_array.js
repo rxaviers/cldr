@@ -1,3 +1,4 @@
-export default Array.isArray || function( obj ) {
-	return Object.prototype.toString.call( obj ) === "[object Array]";
-};
+export default Array.isArray ||
+  function(obj) {
+    return Object.prototype.toString.call(obj) === "[object Array]";
+  };

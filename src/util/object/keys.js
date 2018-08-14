@@ -1,14 +1,14 @@
-export default function( object ) {
-	var i,
-		result = [];
+export default function(object) {
+  var i,
+    result = [];
 
-	if ( Object.keys ) {
-		return Object.keys( object );
-	}
+  if (Object.keys) {
+    return Object.keys(object);
+  }
 
-	for ( i in object ) {
-		result.push( i );
-	}
+  for (i in object) {
+    result.push(i);
+  }
 
-	return result;
+  return result;
 }

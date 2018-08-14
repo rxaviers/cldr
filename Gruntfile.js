@@ -6,32 +6,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: pkg,
-		jshint: {
-			source: {
-				src: [ "src/**/*.js", "!src/build/**" ],
-				options: {
-					jshintrc: "src/.jshintrc"
-				}
-			},
-			grunt: {
-				src: [ "Gruntfile.js" ],
-				options: {
-					jshintrc: ".jshintrc"
-				}
-			},
-			metafiles: {
-				src: [ "package.json" ],
-				options: {
-					jshintrc: ".jshintrc"
-				}
-			},
-			test: {
-				src: [ "test/**/*.js" ],
-				options: {
-					jshintrc: "test/.jshintrc"
-				}
-			}
-		},
 		dco: {
 			current: {
 				options: {
@@ -55,6 +29,9 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
+			lint: {
+				exec: "npm run lint"
+			},
 			test_unit: {
 				exec: "npm run test:unit"
 			},
@@ -76,10 +53,7 @@ module.exports = function(grunt) {
 		.forEach(grunt.loadNpmTasks);
 
 	grunt.registerTask( "default", [
-		"jshint:metafiles",
-		"jshint:grunt",
-		"jshint:source",
-		"jshint:test",
+		"run:lint",
 		"run:test_unit",
 		"run:build_dist",
 		"run:build_esm",

@@ -8,27 +8,27 @@ import arrayIsArray from "../array/is_array";
 // -> { a: { b: 3, c: 2, d: 4 } }
 //
 // @arguments JSON's
-// 
+//
 var merge = function() {
-	var destination = {},
-		sources = [].slice.call( arguments, 0 );
-	arrayForEach( sources, function( source ) {
-		var prop;
-		for ( prop in source ) {
-			if ( prop in destination && typeof destination[ prop ] === "object" && !arrayIsArray( destination[ prop ] ) ) {
-
-				// Merge Objects
-				destination[ prop ] = merge( destination[ prop ], source[ prop ] );
-
-			} else {
-
-				// Set new values
-				destination[ prop ] = source[ prop ];
-
-			}
-		}
-	});
-	return destination;
+  var destination = {},
+    sources = [].slice.call(arguments, 0);
+  arrayForEach(sources, function(source) {
+    var prop;
+    for (prop in source) {
+      if (
+        prop in destination &&
+        typeof destination[prop] === "object" &&
+        !arrayIsArray(destination[prop])
+      ) {
+        // Merge Objects
+        destination[prop] = merge(destination[prop], source[prop]);
+      } else {
+        // Set new values
+        destination[prop] = source[prop];
+      }
+    }
+  });
+  return destination;
 };
 
 export default merge;

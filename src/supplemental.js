@@ -9,8 +9,8 @@ var initSuper = Cldr.prototype.init;
  * Overload .init().
  */
 Cldr.prototype.init = function() {
-	initSuper.apply( this, arguments );
-	this.supplemental = supplementalMain( this );
+  initSuper.apply(this, arguments);
+  this.supplemental = supplementalMain(this);
 };
 
 export default Cldr;

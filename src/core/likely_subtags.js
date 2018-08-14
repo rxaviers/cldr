@@ -42,50 +42,56 @@ import arraySome from "../util/array/some";
  *
  * @subtags [Array] normalized language id subtags tuple (see init.js).
  */
-export default function( Cldr, cldr, subtags, options ) {
-	var match, matchFound,
-		language = subtags[ 0 ],
-		script = subtags[ 1 ],
-		sep = Cldr.localeSep,
-		territory = subtags[ 2 ],
-		variants = subtags.slice( 3, 4 );
-	options = options || {};
+export default function(Cldr, cldr, subtags, options) {
+  var match,
+    matchFound,
+    language = subtags[0],
+    script = subtags[1],
+    sep = Cldr.localeSep,
+    territory = subtags[2],
+    variants = subtags.slice(3, 4);
+  options = options || {};
 
-	// Skip if (language, script, territory) is not empty [3.3]
-	if ( language !== "und" && script !== "Zzzz" && territory !== "ZZ" ) {
-		return [ language, script, territory ].concat( variants );
-	}
+  // Skip if (language, script, territory) is not empty [3.3]
+  if (language !== "und" && script !== "Zzzz" && territory !== "ZZ") {
+    return [language, script, territory].concat(variants);
+  }
 
-	// Skip if no supplemental likelySubtags data is present
-	if ( typeof cldr.get( "supplemental/likelySubtags" ) === "undefined" ) {
-		return;
-	}
+  // Skip if no supplemental likelySubtags data is present
+  if (typeof cldr.get("supplemental/likelySubtags") === "undefined") {
+    return;
+  }
 
-	// [2]
-	matchFound = arraySome([
-		[ language, script, territory ],
-		[ language, territory ],
-		[ language, script ],
-		[ language ],
-		[ "und", script ]
-	], function( test ) {
-		return match = !(/\b(Zzzz|ZZ)\b/).test( test.join( sep ) ) /* [1.4] */ && cldr.get( [ "supplemental/likelySubtags", test.join( sep ) ] );
-	});
+  // [2]
+  matchFound = arraySome(
+    [
+      [language, script, territory],
+      [language, territory],
+      [language, script],
+      [language],
+      ["und", script]
+    ],
+    function(test) {
+      return (match =
+        !/\b(Zzzz|ZZ)\b/.test(test.join(sep)) /* [1.4] */ &&
+        cldr.get(["supplemental/likelySubtags", test.join(sep)]));
+    }
+  );
 
-	// [3]
-	if ( matchFound ) {
-		// [3.2 .. 3.4]
-		match = match.split( sep );
-		return [
-			language !== "und" ? language : match[ 0 ],
-			script !== "Zzzz" ? script : match[ 1 ],
-			territory !== "ZZ" ? territory : match[ 2 ]
-		].concat( variants );
-	} else if ( options.force ) {
-		// [3.1.2]
-		return cldr.get( "supplemental/likelySubtags/und" ).split( sep );
-	} else {
-		// [3.1.1]
-		return;
-	}
+  // [3]
+  if (matchFound) {
+    // [3.2 .. 3.4]
+    match = match.split(sep);
+    return [
+      language !== "und" ? language : match[0],
+      script !== "Zzzz" ? script : match[1],
+      territory !== "ZZ" ? territory : match[2]
+    ].concat(variants);
+  } else if (options.force) {
+    // [3.1.2]
+    return cldr.get("supplemental/likelySubtags/und").split(sep);
+  } else {
+    // [3.1.1]
+    return;
+  }
 }
