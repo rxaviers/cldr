@@ -15,19 +15,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		compare_size: {
-			files: [
-				"dist/cldr.js",
-				"dist/cldr/*.js"
-			],
-			options: {
-				compress: {
-					gz: function( fileContents ) {
-						return require( "gzip-js" ).zip( fileContents, {} ).length;
-					}
-				}
-			}
-		},
 		run: {
 			lint: {
 				exec: "npm run lint"
@@ -43,6 +30,9 @@ module.exports = function(grunt) {
 			},
 			build_esm: {
 				exec: "npm run build:esm"
+			},
+			compare_size: {
+				exec: "npm run compare_size"
 			}
 		}
 	});
@@ -58,7 +48,7 @@ module.exports = function(grunt) {
 		"run:build_dist",
 		"run:build_esm",
 		"run:test_functional",
-		"compare_size",
+		"run:compare_size",
 		"dco"
 	]);
 
