@@ -17,13 +17,14 @@ var exec = require("child_process").exec;
 const glob = require("glob");
 const debug = require("debug")("compare-size");
 const chalk = require("chalk");
+const table = require("text-table");
 
 const options = {
   files: ["dist/cldr.js", "dist/cldr/*.js"],
   options: {
     compress: {
       gz: function(fileContents) {
-        return require("gzip-js").zip(fileContents, {}).length;
+        return require("gzip-size").sync(fileContents);
       }
     }
   }
@@ -69,104 +70,6 @@ const file = {
     }
   }
 };
-
-// Return a string, uncolored (suitable for testing .length, etc).
-function uncolor(str) {
-  return str.replace(/\x1B\[\d+m/g, "");
-}
-
-// Word-wrap text to a given width, permitting ANSI color codes.
-function wraptext(width, text) {
-  // notes to self:
-  // grab 1st character or ansi code from string
-  // if ansi code, add to array and save for later, strip from front of string
-  // if character, add to array and increment counter, strip from front of string
-  // if width + 1 is reached and current character isn't space:
-  //  slice off everything after last space in array and prepend it to string
-  //  etc
-
-  // This result array will be joined on \n.
-  var result = [];
-  var matches, color, tmp;
-  var captured = [];
-  var charlen = 0;
-
-  while ((matches = text.match(/(?:(\x1B\[\d+m)|\n|(.))([\s\S]*)/))) {
-    // Updated text to be everything not matched.
-    text = matches[3];
-
-    // Matched a color code?
-    if (matches[1]) {
-      // Save last captured color code for later use.
-      color = matches[1];
-      // Capture color code.
-      captured.push(matches[1]);
-      continue;
-
-      // Matched a non-newline character?
-    } else if (matches[2]) {
-      // If this is the first character and a previous color code was set, push
-      // that onto the captured array first.
-      if (charlen === 0 && color) {
-        captured.push(color);
-      }
-      // Push the matched character.
-      captured.push(matches[2]);
-      // Increment the current charlen.
-      charlen++;
-      // If not yet at the width limit or a space was matched, continue.
-      if (charlen <= width || matches[2] === " ") {
-        continue;
-      }
-      // The current charlen exceeds the width and a space wasn't matched.
-      // "Roll everything back" until the last space character.
-      tmp = captured.lastIndexOf(" ");
-      text = captured.slice(tmp === -1 ? tmp : tmp + 1).join("") + text;
-      captured = captured.slice(0, tmp);
-    }
-
-    // The limit has been reached. Push captured string onto result array.
-    result.push(captured.join(""));
-
-    // Reset captured array and charlen.
-    captured = [];
-    charlen = 0;
-  }
-
-  result.push(captured.join(""));
-  return result.join("\n");
-}
-
-function writetableln(widths, texts) {
-  var rows = [];
-  widths.forEach(function(width, i) {
-    var lines = wraptext(width, texts[i]).split("\n");
-    lines.forEach(function(line, j) {
-      var row = rows[j];
-      if (!row) {
-        row = rows[j] = [];
-      }
-      row[i] = line;
-    });
-  });
-
-  var lines = [];
-  rows.forEach(function(row) {
-    var txt = "";
-    var column;
-    for (var i = 0; i < row.length; i++) {
-      column = row[i] || "";
-      txt += column;
-      var diff = widths[i] - uncolor(column).length;
-      if (diff > 0) {
-        txt += _.repeat(" ", diff);
-      }
-    }
-    lines.push(txt);
-  }, this);
-
-  console.log(lines.join("\n"));
-}
 
 const defaultCache = ".sizecache.json";
 const lastrun = " last run";
@@ -225,7 +128,7 @@ const helpers = {
   },
 
   // Color-coded size difference
-  delta: function(delta, width) {
+  delta: function(delta) {
     var color = "green";
 
     if (delta > 0) {
@@ -236,7 +139,7 @@ const helpers = {
       color = "grey";
     }
 
-    return chalk[color](_.padStart(delta, width));
+    return chalk[color](delta);
   },
 
   // Size cache helper
@@ -350,54 +253,42 @@ function compareSizes(task) {
     newsizes = helpers.sizes(task, compressors),
     files = Object.keys(newsizes),
     sizecache = defaultCache,
-    cache = helpers.get_cache(defaultCache),
+    cache = helpers.get_cache(sizecache),
     tips = cache[""].tips,
     labels = helpers.sorted_labels(cache);
 
   // Obtain the current branch and continue...
   helpers.git_status(function(err, status) {
     var prefixes = compressors ? [""].concat(Object.keys(compressors)) : [""],
-      availableWidth = 79,
-      columns = prefixes.map(function(label) {
-        // Ensure width for the label and 6-character sizes, plus a padding space
-        return Math.max(label.length + 1, 7);
-      }),
-      // Right-align headers
-      commonHeader = prefixes.map(function(label, i) {
-        return _.padStart(
-          i === 0 && compressors ? "raw" : label,
-          columns[i] - 1
-        );
-      });
+      commonHeader = prefixes.map(
+        (label, i) => (i === 0 && compressors ? "raw" : label)
+      );
+
+    const tableOptions = {
+      align: prefixes.map(() => "r").concat("l"),
+      stringLength: s => s.replace(/\x1B\[\d+m/g, "").length // Return a string, uncolored (suitable for testing .length, etc).
+    };
 
     if (err) {
-      log.warn(err);
+      console.warn(err);
       status = {};
     }
 
-    // Remaining space goes to the file path
-    columns.push(
-      Math.max(
-        1,
-        availableWidth -
-          columns.reduce(function(a, b) {
-            return a + b;
-          })
-      )
-    );
+    let rows = [];
+    rows.push(commonHeader.concat("Sizes"));
 
     // Raw sizes
-    writetableln(columns, commonHeader.concat("Sizes"));
     files.forEach(function(key) {
-      writetableln(
-        columns,
+      rows.push(
         prefixes
-          .map(function(prefix, i) {
-            return _.padStart(newsizes[key][prefix], columns[i] - 1);
+          .map(function(prefix) {
+            return newsizes[key][prefix];
           })
           .concat(key + "")
       );
     });
+
+    console.log(table(rows, tableOptions));
 
     // Comparisons
     labels.forEach(function(label) {
@@ -408,28 +299,27 @@ function compareSizes(task) {
         return;
       }
 
+      rows = [];
+
       // Header
-      console.log();
-      writetableln(
-        columns,
+      rows.push(
         commonHeader.concat("Compared to " + helpers.label(label, tips[label]))
       );
 
       // Data
       files.forEach(function(key) {
         var old = oldsizes && oldsizes[key];
-        writetableln(
-          columns,
+        rows.push(
           prefixes
-            .map(function(prefix, i) {
-              return helpers.delta(
-                old && newsizes[key][prefix] - old[prefix],
-                columns[i] - 1
-              );
+            .map(function(prefix) {
+              return helpers.delta(old && newsizes[key][prefix] - old[prefix]);
             })
             .concat(key + "")
         );
       });
+
+      console.log();
+      console.log(table(rows, tableOptions));
     });
 
     // Update "last run" sizes
