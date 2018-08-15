@@ -11,9 +11,9 @@
 
 "use strict";
 
-var _ = require("lodash");
-var fs = require("fs");
-var exec = require("child_process").exec;
+const _ = require("lodash");
+const fs = require("fs");
+const exec = require("child_process").exec;
 const glob = require("glob");
 const debug = require("debug")("compare-size");
 const chalk = require("chalk");
@@ -266,6 +266,7 @@ function compareSizes(task) {
 
     const tableOptions = {
       align: prefixes.map(() => "r").concat("l"),
+      // eslint-disable-next-line no-control-regex
       stringLength: s => s.replace(/\x1B\[\d+m/g, "").length // Return a string, uncolored (suitable for testing .length, etc).
     };
 
@@ -279,13 +280,7 @@ function compareSizes(task) {
 
     // Raw sizes
     files.forEach(function(key) {
-      rows.push(
-        prefixes
-          .map(function(prefix) {
-            return newsizes[key][prefix];
-          })
-          .concat(key + "")
-      );
+      rows.push(prefixes.map(prefix => newsizes[key][prefix]).concat(key + ""));
     });
 
     console.log(table(rows, tableOptions));
