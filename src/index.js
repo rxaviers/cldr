@@ -1,8 +1,8 @@
 // Cldr
-import Cldr from "./cldr";
+import Cldr from "./index";
 export default Cldr;
 
 // Extent Cldr with the following modules
-import "./cldr/event";
-import "./cldr/supplemental";
-import "./cldr/unresolved";
+import "./event";
+import "./supplemental";
+import "./unresolved";
