@@ -17,6 +17,7 @@ export default function(Cldr, cldr, minLanguageId) {
     availableBundleMapQueue = Cldr._availableBundleMapQueue;
 
   if (availableBundleMapQueue.length) {
+    Cldr._availableBundleMapQueue = [];
     arrayForEach(availableBundleMapQueue, function(bundle) {
       var existing, maxBundle, minBundle, subtags;
       subtags = coreSubtags(bundle);
@@ -29,7 +30,6 @@ export default function(Cldr, cldr, minLanguageId) {
       }
       availableBundleMap[minBundle] = bundle;
     });
-    Cldr._availableBundleMapQueue = [];
   }
 
   return availableBundleMap[minLanguageId] || null;

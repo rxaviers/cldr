@@ -55,4 +55,23 @@ describe("Bundle Lookup", function() {
     sr = new Cldr("sr-RS");
     expect(sr.attributes.bundle).to.equal("sr");
   });
+
+  it("should clear the global _availableBundleMapQueue on failure to process bundle", function() {
+    expect(() => {
+      Cldr.load({
+        main: { "xx-XX": {} }
+      });
+      expect(Cldr._availableBundleMapQueue).to.include.members(["xx-XX"]);
+      new Cldr("xx-XX");
+    }).to.throw()
+    expect(Cldr._availableBundleMapQueue).to.be.empty;
+
+    Cldr.load({
+      main: { "sr": {} }
+    });
+    expect(Cldr._availableBundleMapQueue).to.include.members(["sr"]);
+    const sr = new Cldr("sr-Cyrl");
+    expect(Cldr._availableBundleMapQueue).to.be.empty;
+    expect(sr.attributes.bundle).to.equal("sr");
+  });
 });
