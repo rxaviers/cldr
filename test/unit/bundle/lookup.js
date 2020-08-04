@@ -63,11 +63,11 @@ describe("Bundle Lookup", function() {
       });
       expect(Cldr._availableBundleMapQueue).to.include.members(["xx-XX"]);
       new Cldr("xx-XX");
-    }).to.throw()
+    }).to.throw();
     expect(Cldr._availableBundleMapQueue).to.be.empty;
 
     Cldr.load({
-      main: { "sr": {} }
+      main: { sr: {} }
     });
     expect(Cldr._availableBundleMapQueue).to.include.members(["sr"]);
     const sr = new Cldr("sr-Cyrl");
