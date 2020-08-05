@@ -56,22 +56,34 @@ describe("Bundle Lookup", function() {
     expect(sr.attributes.bundle).to.equal("sr");
   });
 
-  it("should clear the global _availableBundleMapQueue on failure to process bundle", function() {
-    expect(() => {
-      Cldr.load({
-        main: { "xx-XX": {} }
-      });
-      expect(Cldr._availableBundleMapQueue).to.include.members(["xx-XX"]);
-      new Cldr("xx-XX");
-    }).to.throw();
-    expect(Cldr._availableBundleMapQueue).to.be.empty;
+  it("should remove problematic bundle from the global _availableBundleMapQueue on failure", function() {
+    Cldr.load(
+      {
+        main: { bg: {} } // valid
+      },
+      {
+        main: { xx: {} } // invalid
+      },
+      {
+        main: { sr: {} } // valid
+      }
+    );
 
-    Cldr.load({
-      main: { sr: {} }
-    });
-    expect(Cldr._availableBundleMapQueue).to.include.members(["sr"]);
-    const sr = new Cldr("sr-Cyrl");
-    expect(Cldr._availableBundleMapQueue).to.be.empty;
-    expect(sr.attributes.bundle).to.equal("sr");
+    expect(Cldr._availableBundleMapQueue).to.eql(["bg", "xx", "sr"]);
+
+    expect(() => {
+      // triggers the loading of bundle queue
+      new Cldr("bg");
+    }).to.throw();
+
+    expect(Cldr._availableBundleMapQueue).to.eql(["sr"]);
+
+    // the invalid bundle has been removed so we can load bg
+    new Cldr("bg");
+
+    // and sr, which will now trigger the loading of the rest of the queue
+    new Cldr("sr");
+
+    expect(Cldr._availableBundleMapQueue).to.eql([]);
   });
 });
